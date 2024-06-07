@@ -1,6 +1,6 @@
+import User from "../models/user.model.js";
 import {errorHandler} from "../utils/error.js";
 import bcrypt from "bcryptjs";
-import User from "../models/user.model.js";
 export const test =(req,res)=>{
     res.json({
         message:"API is working!!"
@@ -23,12 +23,14 @@ export const updateUser =async(req,res,next)=>{
                 email:req.body.email,
                 password:req.body.password,
                 profilePicture:req.body.profilePicture,
-            }
-        },{new:true})
+            },
+        },
+        {new:true}
+    );
         const {password,...rest} =updatedUser._doc;
         res.status(200).json(rest);
         
     } catch (error) {
         next(error)
     }
-}
+};

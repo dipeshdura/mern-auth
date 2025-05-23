@@ -11,6 +11,7 @@ export const useAuth =()=>{
                 password
             })
         });
+      
         const data =await response.json();
         return data;
 

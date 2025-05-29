@@ -1,6 +1,8 @@
+import { API_URL } from "../contextapi/api";
+
 export const useAuth =()=>{
     const signupForm =async({username,email, password})=>{
-        const response =await fetch("/api/auth/signup",{
+        const response =await fetch(`${API_URL}/api/auth/signup`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -17,7 +19,7 @@ export const useAuth =()=>{
 
     }
     const signinForm =async({email, password})=>{
-        const response =await fetch("/api/auth/signin",{
+        const response =await fetch(`${API_URL}/api/auth/signin`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -32,7 +34,7 @@ export const useAuth =()=>{
     }
     
     const googleAuth =async({displayName,email,photoURL})=>{
-        const response =await fetch("/api/auth/google",{
+        const response =await fetch(`${API_URL}/api/auth/google`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"

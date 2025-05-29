@@ -22,7 +22,13 @@ const __dirname = path.dirname(__filename);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 //middleware
-app.use(cors());
+const FRONTEND_URL = "https://mern-auth-fi7s.onrender.com";
+
+app.use(cors({
+  origin: FRONTEND_URL,
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(helmet());
@@ -35,6 +41,7 @@ app.get("/api/health",(req,res)=>{
 
 app.use("/api/auth",authRoutes)
 app.use("/api/user",userRoutes)
+
 
 
 

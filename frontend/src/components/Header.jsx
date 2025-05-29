@@ -15,7 +15,7 @@ const Header = () => {
               <Link to="/about">About</Link>
 
               {currentUser ? (
-                <Link to={`/profile/${currentUser._id || currentUser.user._id}`}>
+                <Link to={`/profile/${currentUser?._id || currentUser?.user?._id}`}>
                  <img src={currentUser?.profilePicture || currentUser?.user?.profilePicture} alt="profile" className='h-7 w-7 rounded-full object-cover' />
                 </Link>
               ):(

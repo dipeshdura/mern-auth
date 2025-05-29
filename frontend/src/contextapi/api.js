@@ -1,1 +1,1 @@
-export const API_URL ="https://mern-auth-6aog.onrender.com"
+export const API_URL ="https://mern-auth-z43o.onrender.com"

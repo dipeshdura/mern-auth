@@ -21,8 +21,9 @@ export const updateUser =asyncHandler(async(req,res,next)=>{
          if (email) updateFields.email = email;
         if (password) updateFields.password = password;
         // if (profilePicture) updateFields.profilePicture =`http://localhost:3000/uploads/${profilePicture}`; //development
-        if (profilePicture) updateFields.profilePicture =`${req.protocol}://${req.get("host")}/uploads/${profilePicture}`; //production
-
+        if (profilePicture) updateFields.profilePicture =`https://mern-auth-z43o.onrender.com/uploads/${profilePicture}`; //production
+            
+        
        
         
       

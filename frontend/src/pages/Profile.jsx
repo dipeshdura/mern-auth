@@ -16,6 +16,8 @@ import { toast } from "react-toastify";
 
 const Profile = () => {
   const { currentUser, loading, error } = useSelector((state) => state.user);
+
+  
   const { id } = useParams();
 
   const [image, setImage] = useState(null);

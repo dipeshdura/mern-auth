@@ -2,6 +2,7 @@ import { toast } from "react-toastify";
 import { API_URL } from "../contextapi/api";
 
 export const useProfile = () => {
+  
   const updateProfile = async ({ username, email, password }, image, id) => {
     const formData = new FormData();
     if (username) formData.append("username", username);

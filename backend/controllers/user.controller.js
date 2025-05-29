@@ -20,8 +20,10 @@ export const updateUser =asyncHandler(async(req,res,next)=>{
         if (username) updateFields.username = username;
          if (email) updateFields.email = email;
         if (password) updateFields.password = password;
-        if (profilePicture) updateFields.profilePicture =`http://localhost:3000/uploads/${profilePicture}`;
-        console.log(profilePicture);
+        // if (profilePicture) updateFields.profilePicture =`http://localhost:3000/uploads/${profilePicture}`; //development
+        if (profilePicture) updateFields.profilePicture =`${req.protocol}://${req.get("host")}/uploads/${profilePicture}`; //production
+
+       
         
       
 

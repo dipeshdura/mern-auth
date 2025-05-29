@@ -14,9 +14,7 @@ export const useProfile = () => {
       const res = await fetch(`${API_URL}/api/user/update/${id}`, {
         method: "PATCH",
         body: formData,
-        headers:{
-          "Authorization":`Bearer ${token}`
-        }
+       
         credentials: "include",
       });
       const data = await res.json();

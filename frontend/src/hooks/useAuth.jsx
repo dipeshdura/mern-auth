@@ -7,6 +7,7 @@ export const useAuth =()=>{
             headers:{
                 "Content-Type":"application/json"
             },
+            credentials:"include",
             body:JSON.stringify({
                 username,
                 email,
@@ -24,6 +25,7 @@ export const useAuth =()=>{
             headers:{
                 "Content-Type":"application/json"
             },
+             credentials:"include",
             body:JSON.stringify({
                 email,
                 password
@@ -39,6 +41,7 @@ export const useAuth =()=>{
             headers:{
                 "Content-Type":"application/json"
             },
+             credentials:"include",
             body:JSON.stringify({
                 displayName,
                 email,

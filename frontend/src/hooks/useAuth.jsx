@@ -30,5 +30,21 @@ export const useAuth =()=>{
         const data =await response.json();
         return data;
     }
-    return {signupForm,signinForm};
+    
+    const googleAuth =async({displayName,email,photoURL})=>{
+        const response =await fetch("/api/auth/google",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                displayName,
+                email,
+                photoURL
+            })
+        })
+        const data =await response.json();
+        return data;
+    }
+    return {signupForm,signinForm,googleAuth};
 }

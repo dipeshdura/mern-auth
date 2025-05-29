@@ -1,5 +1,10 @@
 import React, { useRef, useState } from 'react'
 import { useAuth } from '../hooks/useAuth';
+import OAuth from '../components/OAuth';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {signUpStart,signUpSuccess,signUpFailure} from "../redux/user/userSlice";
+import { toast } from 'react-toastify';
 
 const SignUp = () => {
     const [formData, setFormData] =useState({
@@ -7,9 +12,11 @@ const SignUp = () => {
       email:"",
       password:""
     });
+    
+    const navigate =useNavigate();
     const passwordRef =useRef();
-    const [error, setError] =useState(false);
-    const [loading, setLoading] =useState(false);
+    const {loading,error} =useSelector((state)=>state.user);
+    const dispatch =useDispatch();
     const handleChange =(e)=>{
 
         setFormData({
@@ -21,28 +28,29 @@ const SignUp = () => {
       e.preventDefault();
       const {username,email,password} =formData;
       if(!username || !email || !password){
+        toast.error("All fileds are required")
         return
       }
       try {
-        setLoading(true);
-        setError(false);
+        dispatch(signUpStart());
         const result =await signupForm(formData);
-        setLoading(false);
+      
         if(result.success ===false){
-          setError(true);
+          dispatch(signUpFailure(result));
+          toast.error(error);
           return;
         }
+        dispatch(signUpSuccess(result));
+        toast.success("Signup successful")
         setFormData({
           username:"",
           email:"",
           password:""
         })
-        
+        navigate("/sign-in");
       } catch (error) {
-        console.log(error);
-        
-        setError(true);
-        setLoading(false);
+       dispatch(signUpFailure(error));
+       toast.error(error);
       }
     }
   return (
@@ -78,10 +86,11 @@ const SignUp = () => {
                 passwordRef.current.type =e.target.checked ? "text":"password"
                }} name="showPassword" id="showPassword"  />
               <button disabled={loading}
-              className="bg-slate-700 text-white p-3 cursor-pointer rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+              className="bg-white text-black border-[#c8bdbd] border p-3 cursor-pointer rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
               >
                {loading ? "Loading...": "Sign Up"}
                 </button>
+                <OAuth/>
         </form>
         <div className="flex justify-center mx-auto gap-2 mt-5">
             <p>{"I Have an Account?"}</p>
@@ -89,7 +98,9 @@ const SignUp = () => {
                 <span className="text-blue-500">Sign in</span>
             </a>
         </div>
-        <p className="text-red-700 mt-5">{error && "Something went wrong 😳"}</p>
+        <p className="text-red-700 mt-5">
+            {error ? error.message || "Something went wrong 😳" : ""}
+        </p>
     </div>
   )
 }

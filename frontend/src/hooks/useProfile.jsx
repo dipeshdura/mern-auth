@@ -1,3 +1,61 @@
-const useProfile =()=>{
-    
-}
+import { useSelector } from "react-redux";
+
+import { toast } from "react-toastify";
+
+export const useProfile = () => {
+
+
+
+  const updateProfile = async ({ username, email, password }, image,id) => {
+   
+
+    const formData = new FormData();
+    if(username)formData.append("username", username);
+    if(email)formData.append("email", email);
+    if (password) formData.append("password", password);
+    if (image) formData.append("image", image);
+
+    try {
+      const res = await fetch(`/api/user/update/${id}`, {
+        method: "PATCH",
+        body: formData,
+        credentials: "include",
+      });
+      const data = await res.json();
+      return data;
+    } catch (error) {
+     toast.error("Something went wrong");
+     return error;
+    }
+  };
+  const deleteProfile = async (id) => {
+    try {
+      const res = await fetch(`/api/user/delete/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const signout = async () => {
+    try {
+      const res = await fetch("/api/auth/signout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  return { updateProfile, deleteProfile, signout };
+};

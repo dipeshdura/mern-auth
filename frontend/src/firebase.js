@@ -1,3 +1,5 @@
+
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -5,7 +7,7 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  apiKey:import.meta.env.VITE_FIREBASE_API_KEY ,
   authDomain: "mern-auth-41960.firebaseapp.com",
   projectId: "mern-auth-41960",
   storageBucket: "mern-auth-41960.firebasestorage.app",

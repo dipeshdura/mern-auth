@@ -5,18 +5,29 @@ import helmet from "helmet";
 import { config } from "dotenv";
 import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
+import cookieParser from "cookie-parser";
+import { fileURLToPath } from 'url';
+
 config();
 const app =express();
 
-//static 
 
+//static
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve static files from 'backend/uploads'
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 //middleware
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use(helmet());
 
+
 //routes middleware
+
 app.use("/api/auth",authRoutes)
 app.use("/api/user",userRoutes)
 
@@ -29,8 +40,6 @@ app.use((err,req,res,next)=>{
         statusCode,
     });
 });
-
-
 
 
 

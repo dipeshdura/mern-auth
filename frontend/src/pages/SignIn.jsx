@@ -1,23 +1,29 @@
 import React, { useRef, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { signInFailure, signInStart, signInSuccess } from "../redux/user/userSlice";
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
+import { toast } from "react-toastify";
 const SignIn = () => {
   const [formData, setFormData] = useState({
-    email:"",
-    password:""
+    email: "",
+    password: "",
   });
-  const passwordRef =useRef();
- const {loading , error} =useSelector((state)=>state.user);
+  const passwordRef = useRef();
+  const { loading, error } = useSelector((state) => state.user);
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
     });
   };
-  const navigate =useNavigate();
-  const dispatch =useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { signinForm } = useAuth();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,19 +35,21 @@ const SignIn = () => {
       dispatch(signInStart());
       const result = await signinForm(formData);
 
-      if(result.success ===false){
+      if (result.success === false) {
         dispatch(signInFailure(result));
+        toast.error(error);
         return;
       }
       dispatch(signInSuccess(result));
+      toast.success("SignIn successful")
       setFormData({
-        email:"",
-        password:"",
-      })
+        email: "",
+        password: "",
+      });
       navigate("/");
     } catch (error) {
       dispatch(signInFailure(error));
-     
+      toast.error(error);
     }
   };
 
@@ -67,16 +75,22 @@ const SignIn = () => {
           onChange={handleChange}
           checked
         />
-        <input type="checkbox" onClick={(e)=>{
-         passwordRef.current.type =e.target.checked ? "text":"password"
-        }} name="showPassword" id="showPassword"  />
-       
+        <input
+          type="checkbox"
+          onClick={(e) => {
+            passwordRef.current.type = e.target.checked ? "text" : "password";
+          }}
+          name="showPassword"
+          id="showPassword"
+        />
+
         <button
           disabled={loading}
-          className="bg-slate-700 text-white p-3 cursor-pointer rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+          className="bg-white text-black border-[#c8bdbd] border p-3 cursor-pointer rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
         >
           {loading ? "Loading..." : "Sign In"}
         </button>
+        <OAuth />
       </form>
       <div className="flex justify-center mx-auto gap-2 mt-5">
         <p>{"Don't Have an Account?"}</p>
@@ -84,7 +98,9 @@ const SignIn = () => {
           <span className="text-blue-500">Sign up</span>
         </a>
       </div>
-      <p className="text-red-700 mt-5">{error? error.message || "Something went wrong 😳":""}</p>
+      <p className="text-red-700 mt-5">
+        {error ? error.message || "Something went wrong 😳" : ""}
+      </p>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 # Logs
-.env
+backend/.env
+frontend/.env 
 .gitignore
 logs
 *.log
@@ -9,7 +10,8 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
+backend/node_modules
+frontend/node_modules
 dist
 dist-ssr
 *.local

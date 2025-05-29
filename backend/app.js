@@ -7,6 +7,7 @@ import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 import cookieParser from "cookie-parser";
 import { fileURLToPath } from 'url';
+import { log } from "console";
 
 config();
 const app =express();
@@ -30,6 +31,12 @@ app.use(helmet());
 
 app.use("/api/auth",authRoutes)
 app.use("/api/user",userRoutes)
+
+app.get('/ping',(req,res)=>{
+   
+    
+    res.send("pong")
+});
 
 app.use((err,req,res,next)=>{
     const statusCode =err.statusCode || 500;

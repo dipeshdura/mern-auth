@@ -64,3 +64,7 @@ JWT_SECRET=your-secret-key
 #frontend .env
 
 VITE_FIREBASE_API_KEY=your-firebase-api-key
+
+#render 
+# to wake up everytime
+npm i cron

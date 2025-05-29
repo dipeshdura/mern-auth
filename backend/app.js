@@ -7,12 +7,13 @@ import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 import cookieParser from "cookie-parser";
 import { fileURLToPath } from 'url';
-import { log } from "console";
+
+import job from "./utils/cron.js";
 
 config();
 const app =express();
 
-
+if(process.env.NODE_ENV ==="production") job.start();
 //static
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,16 +28,15 @@ app.use(cookieParser());
 app.use(helmet());
 
 
+app.get("/api/health",(req,res)=>{
+    res.status(200).json({status:"ok"})
+})
 //routes middleware
 
 app.use("/api/auth",authRoutes)
 app.use("/api/user",userRoutes)
 
-app.get('/ping',(req,res)=>{
-   
-    
-    res.send("pong")
-});
+
 
 app.use((err,req,res,next)=>{
     const statusCode =err.statusCode || 500;

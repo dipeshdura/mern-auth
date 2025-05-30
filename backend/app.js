@@ -8,7 +8,7 @@ import userRoutes from "./routes/user.route.js";
 import cookieParser from "cookie-parser";
 import { fileURLToPath } from 'url';
 
-import job from "./utils/cron.js";
+
 
 config();
 const app =express();
@@ -34,9 +34,7 @@ app.use(cookieParser());
 app.use(helmet());
 
 
-app.get("/api/health",(req,res)=>{
-    res.status(200).json({status:"ok"})
-})
+
 //routes middleware
 
 app.use("/api/auth",authRoutes)
